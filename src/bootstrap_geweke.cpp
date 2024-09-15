@@ -23,7 +23,8 @@ double geweke_z(NumericVector chain, double frac1, double frac2) {
 
 // [[Rcpp::export]]
 List bootstrapGewekeCpp(NumericVector chain, int B, int n, double frac1, double frac2) {
-  int chain_length = chain.size();
+  // Removed the unused 'chain_length' variable
+  // int chain_length = chain.size();
 
   // Matrix to hold bootstrap samples
   NumericMatrix bootstrap_samples(B, n);

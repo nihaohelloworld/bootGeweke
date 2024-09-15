@@ -1,4 +1,4 @@
-Package: myRcppPackage
+Package: bootGeweke
 Type: Package
 Title: A Simple Rcpp Example Package
 Version: 0.1.0
@@ -9,4 +9,5 @@ Depends: R (>= 3.5.0)
 Imports: Rcpp (>= 1.0.5)
 LinkingTo: Rcpp
 License: MIT
-
+RoxygenNote: 7.3.2
+Encoding: UTF-8

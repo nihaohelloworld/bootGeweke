@@ -1,7 +1,7 @@
 library(Rcpp)
 
 # Source the C++ code
-sourceCpp("bootstrap_geweke.cpp")
+sourceCpp("../bootstrapMCMCGeweke/src/bootstrap_geweke.cpp")
 
 #' Bootstrap Geweke Diagnostic
 #'
@@ -26,7 +26,7 @@ sourceCpp("bootstrap_geweke.cpp")
 #' @examples
 #' \dontrun{
 #' mcmc_chain <- rnorm(1000)  # Example MCMC chain
-#' result <- bootstrap_geweke(mcmc_chain, B = 500, n = 100, confidence_level = 0.95)
+#' result <- bootstrap_geweke(mcmc_chain, B = 500, n = 1000, confidence_level = 0.95)
 #' summary(result)
 #' plot(result)
 #' }
