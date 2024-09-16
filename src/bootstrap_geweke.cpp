@@ -4,7 +4,6 @@ using namespace Rcpp;
 // Helper function to compute Geweke Z-score
 double geweke_z(NumericVector chain, double frac1, double frac2) {
   int n = chain.size();
-
   int n1 = frac1 * n;  // Number of initial points
   int n2 = frac2 * n;  // Number of last points
 
@@ -23,9 +22,6 @@ double geweke_z(NumericVector chain, double frac1, double frac2) {
 
 // [[Rcpp::export]]
 List bootstrapGewekeCpp(NumericVector chain, int B, int n, double frac1, double frac2) {
-  // Removed the unused 'chain_length' variable
-  // int chain_length = chain.size();
-
   // Matrix to hold bootstrap samples
   NumericMatrix bootstrap_samples(B, n);
 

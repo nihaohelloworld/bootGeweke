@@ -1,14 +1,16 @@
 Package: bootGeweke
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: bootstrap Geweke MCMC diagnostic
+Version: 1.0.1
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Jay", "Liu", email = "liujie4@myvuw.ac.nz", role = c("aut", "cre"))
+Description: bootstrap sampling from MCMC chains and perform Geweke diagnostic.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Imports: 
+Imports:
+    Rcpp, 
+    stats,
+    graphics
 LinkingTo: 
     Rcpp
