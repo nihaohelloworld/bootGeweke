@@ -22,17 +22,19 @@ bootstrap_geweke(
 
 \item{confidence_level}{Numeric. The confidence level for calculating confidence intervals of Z-scores. Default is 0.95.}
 
-\item{frac1}{Numeric. The proportion of the chain used for the initial segment. Default is 0.1 (the first 10% of the chain).}
+\item{frac1}{Numeric. The proportion of the chain used for the initial segment. Default is 0.1 (the first 10\% of the chain).}
 
-\item{frac2}{Numeric. The proportion of the chain used for the last segment. Default is 0.5 (the last 50% of the chain).}
+\item{frac2}{Numeric. The proportion of the chain used for the last segment. Default is 0.5 (the last 50\% of the chain).}
 }
 \value{
-A list of class "bootGeweke", which contains:
-  \item{bootstrap_samples}{A matrix containing all bootstrap samples (B x n).}
-  \item{z_scores}{A vector of bootstrap Z-scores of length B.}
-  \item{z_mean}{The mean of the Z-scores.}
-  \item{z_sd}{The standard deviation of the Z-scores.}
-  \item{confidence_intervals}{A vector of confidence intervals for the Z-scores based on the provided confidence level.}
+A list of class "bootGeweke" containing:
+\describe{
+\item{bootstrap_samples}{A matrix containing all bootstrap samples (B x n).}
+\item{z_scores}{A vector of bootstrap Z-scores of length B.}
+\item{z_mean}{The mean of the Z-scores.}
+\item{z_sd}{The standard deviation of the Z-scores.}
+\item{confidence_intervals}{A vector of confidence intervals for the Z-scores based on the provided confidence level.}
+}
 }
 \description{
 This function performs a bootstrap-based Geweke diagnostic on an MCMC object.
@@ -42,7 +44,7 @@ based on the bootstrap samples.
 \examples{
 \dontrun{
 mcmc_chain <- rnorm(1000)  # Example MCMC chain
-result <- bootstrap_geweke(mcmc_chain, B = 500, n = 1000, confidence_level = 0.95)
+result <- bootstrap_geweke(mcmc_chain, B = 500, n = 100, confidence_level = 0.95)
 summary(result)
 plot(result)
 }

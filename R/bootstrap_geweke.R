@@ -1,8 +1,3 @@
-library(Rcpp)
-
-# Source the C++ code
-sourceCpp("../bootstrapMCMCGeweke/src/bootstrap_geweke.cpp")
-
 #' Bootstrap Geweke Diagnostic
 #'
 #' This function performs a bootstrap-based Geweke diagnostic on an MCMC object.
@@ -16,22 +11,24 @@ sourceCpp("../bootstrapMCMCGeweke/src/bootstrap_geweke.cpp")
 #' @param frac1 Numeric. The proportion of the chain used for the initial segment. Default is 0.1 (the first 10% of the chain).
 #' @param frac2 Numeric. The proportion of the chain used for the last segment. Default is 0.5 (the last 50% of the chain).
 #'
-#' @return A list of class "bootGeweke", which contains:
+#' @importFrom stats quantile sd
+#' @return A list of class "bootGeweke" containing:
+#' \describe{
 #'   \item{bootstrap_samples}{A matrix containing all bootstrap samples (B x n).}
 #'   \item{z_scores}{A vector of bootstrap Z-scores of length B.}
 #'   \item{z_mean}{The mean of the Z-scores.}
 #'   \item{z_sd}{The standard deviation of the Z-scores.}
 #'   \item{confidence_intervals}{A vector of confidence intervals for the Z-scores based on the provided confidence level.}
+#' }
 #'
 #' @examples
 #' \dontrun{
 #' mcmc_chain <- rnorm(1000)  # Example MCMC chain
-#' result <- bootstrap_geweke(mcmc_chain, B = 500, n = 1000, confidence_level = 0.95)
+#' result <- bootstrap_geweke(mcmc_chain, B = 500, n = 100, confidence_level = 0.95)
 #' summary(result)
 #' plot(result)
 #' }
 #'
-#' @import Rcpp
 #' @export
 # bootstrap_geweke function
 bootstrap_geweke <- function(x, B = NULL, n = NULL, confidence_level = 0.95, frac1 = 0.1, frac2 = 0.5) {
@@ -74,9 +71,10 @@ summary.bootGeweke <- function(object, ...) {
 }
 
 #' @method plot bootGeweke
+#' @importFrom graphics abline hist
 #' @export
 # Plot method for bootGeweke class
-plot.bootGeweke <- function(object, ...) {
-  hist(object$z_scores, main = "Bootstrap Geweke Z-scores", xlab = "Z-scores", breaks = 30)
-  abline(v = object$z_mean, col = "red", lwd = 2)
+plot.bootGeweke <- function(x, ...) {
+  hist(x$z_scores, main = "Bootstrap Geweke Z-scores", xlab = "Z-scores", breaks = 30)
+  abline(v = x$z_mean, col = "red", lwd = 2)
 }

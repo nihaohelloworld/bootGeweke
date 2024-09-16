@@ -1,13 +1,13 @@
 Package: bootGeweke
-Type: Package
-Title: A Simple Rcpp Example Package
-Version: 0.1.0
-Author: Your Name
-Maintainer: Your Name <your.email@example.com>
-Description: This package demonstrates how to integrate Rcpp with an R package.
-Depends: R (>= 3.5.0)
-Imports: Rcpp (>= 1.0.5)
-LinkingTo: Rcpp
-License: MIT
-RoxygenNote: 7.3.2
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.1.00
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: graphics, stats
+LinkingTo: Rcpp
