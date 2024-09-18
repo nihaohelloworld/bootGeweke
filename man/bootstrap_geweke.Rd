@@ -6,8 +6,8 @@
 \usage{
 bootstrap_geweke(
   x,
-  B = NULL,
-  n = NULL,
+  B = 1000,
+  n = length(x),
   confidence_level = 0.95,
   frac1 = 0.1,
   frac2 = 0.5

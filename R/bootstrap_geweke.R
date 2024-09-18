@@ -33,23 +33,14 @@
 #'
 #' @export
 # bootstrap_geweke function
-bootstrap_geweke <- function(x, B = NULL, n = NULL, confidence_level = 0.95, frac1 = 0.1, frac2 = 0.5) {
+bootstrap_geweke <- function(x, B = 1000, n = length(x), confidence_level = 0.95, frac1 = 0.1, frac2 = 0.5) {
 
   # Combine multiple chains into one, if necessary
   if (is.list(x)) {
     x <- unlist(x)
   }
 
-  # Set B to 1000 if not specified
-  if (is.null(B)) {
-    B <- 1000
-  }
-  # Set n to the length of the chain if not specified
-  if (is.null(n)) {
-    n <- length(x)
-  }
-
-  # Call the C++ function to do the heavy lifting
+  # Call the C++ function to do the computation
   result <- bootstrapGewekeCpp(x, B, n, frac1, frac2)
 
   # Create a class for the result
