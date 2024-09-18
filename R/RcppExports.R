@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 bootstrapGewekeCpp <- function(chain, B, n, frac1, frac2) {
-    .Call('_bootGeweke_bootstrapGewekeCpp', PACKAGE = 'bootGeweke', chain, B, n, frac1, frac2)
+    .Call(`_bootGeweke_bootstrapGewekeCpp`, chain, B, n, frac1, frac2)
 }
 

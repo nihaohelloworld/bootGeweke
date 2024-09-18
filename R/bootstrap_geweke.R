@@ -4,6 +4,7 @@
 #' It computes Z-scores for the Geweke diagnostic, allowing for confidence intervals
 #' based on the bootstrap samples.
 #'
+#' @useDynLib bootGeweke, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 #' @param x An MCMC object, which can potentially contain more than one chain. If multiple chains are present, they will be combined into a single chain before the bootstrap process.
 #' @param B Integer. The number of bootstrap samples to be generated. Default is 1000.
