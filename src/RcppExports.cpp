@@ -11,7 +11,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // bootstrapGewekeCpp
-List bootstrapGewekeCpp(NumericVector chain, int B, int n, double frac1, double frac2);
+NumericVector bootstrapGewekeCpp(NumericVector chain, int B, int n, double frac1, double frac2);
 RcppExport SEXP _bootGeweke_bootstrapGewekeCpp(SEXP chainSEXP, SEXP BSEXP, SEXP nSEXP, SEXP frac1SEXP, SEXP frac2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

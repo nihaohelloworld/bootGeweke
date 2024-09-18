@@ -1,6 +1,6 @@
 Package: bootGeweke
 Title: bootstrap Geweke MCMC diagnostic
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: 
     person("Jay", "Liu", email = "liujie4@myvuw.ac.nz", role = c("aut", "cre"))
 Description: bootstrap sampling from MCMC chains and perform Geweke diagnostic.
