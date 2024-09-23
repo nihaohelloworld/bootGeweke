@@ -1,0 +1,10 @@
+---
+title: "Bootstrap Geweke Diagnostic: An Introduction"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Bootstrap Geweke Diagnostic: An Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
