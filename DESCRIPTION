@@ -15,4 +15,4 @@ Imports:
 LinkingTo: 
     Rcpp
 VignetteBuilder: knitr
-Suggests: knitr, rmarkdown
+Suggests: knitr, rmarkdown, coda
