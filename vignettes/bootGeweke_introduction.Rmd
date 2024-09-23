@@ -28,36 +28,82 @@ The Geweke diagnostic is a convergence diagnostic for Markov Chain Monte Carlo (
 
 ## Installing the Package
 
-You can install the development version of the package using:
+You can install the development version of the package using the provided file:       
+
+1. Locate the `bootGeweke_1.0.3.tar.gz` file, ensure that the package source `.tar.gz` file is in your working directory or specify the full path to the file.       
+2. Install the package using `install.packages()` as follow:    
+
+```{r, eval=FALSE}
+install.packages("bootGeweke_1.0.3.tar.gz", repos = NULL, type = "source")
+```
+
+```{r, eval=FALSE}
+library(bootGeweke)
+# Check for vignettes
+browseVignettes(package = "bootGeweke")
+```
+
+## Example of Using `bootstrap_geweke()` Function
+
+## Example of Multiple Chains and Parameters
 
 ```{r example_geweke_diagnostic, echo = TRUE}
 library(bootGeweke)
 library(coda)
 
-# Generate a synthetic MCMC chain
-set.seed(123)
-example_chain <- coda::as.mcmc.list(coda::mcmc(rnorm(1000)))
+# Simulate two parameters (mu and sigma) with three MCMC chains each
+n_iter <- 1000  # Number of iterations per chain
+n_chains <- 3   # Number of chains
 
-# Perform the bootstrap Geweke diagnostic
-result <- bootstrap_geweke(example_chain, B = 500, n = 500, confidence_level = 0.95, frac1 = 0.1, frac2 = 0.5)
+# Create matrices for each chain, where each column represents a parameter
+# First chain
+chain1 <- cbind(mu = rnorm(n_iter, mean = 0, sd = 1),     # mu for chain 1
+                sigma = rnorm(n_iter, mean = 2, sd = 0.5))  # sigma for chain 1
 
-# Print the results
-print(result)
+# Second chain
+chain2 <- cbind(mu = rnorm(n_iter, mean = 0, sd = 1),     # mu for chain 2
+                sigma = rnorm(n_iter, mean = 2, sd = 0.5))  # sigma for chain 2
+
+# Third chain
+chain3 <- cbind(mu = rnorm(n_iter, mean = 0, sd = 1),     # mu for chain 3
+                sigma = rnorm(n_iter, mean = 2, sd = 0.5))  # sigma for chain 3
+
+# Convert each chain to an mcmc object
+mcmc_chain1 <- mcmc(chain1)
+mcmc_chain2 <- mcmc(chain2)
+mcmc_chain3 <- mcmc(chain3)
+
+# Combine the chains into a single mcmc.list object
+mcmc_object <- mcmc.list(mcmc_chain1, mcmc_chain2, mcmc_chain3)
+
+# Perform the bootstrap Geweke diagnostic with multiple chains and parameters
+# with default n as the length of the mcmc_object
+result <- bootstrap_geweke(mcmc_object, B = 1000, confidence_level = 0.95, 
+                           frac1 = 0.1, frac2 = 0.5)
 ```
 
 ## Plotting the Z-scores
 
-The `plot()` method for `bootGeweke` objects allow you to visualize the distribution of Z-scores:       
+The `plot()` method for `bootGeweke` objects allow you to visualize the distribution of Z-scores for different parameters:       
 
 ```{r}
-plot(result)
+# Plot the Z-scores for the first parameter (mu)
+plot(result, param = 1)
 ```
+
+
+```{r}
+# Plot the Z-scores for the second parameter (sigma)
+plot(result, param = 2)
+```
+
 
 ## Summary the Z-scores statistic       
 
 The `summary()` method for `bootGeweke` objects allow you to summaries the statistics of Z-scores distribution: `Mean Z-score`, `Standard Deviation`, `Confidence Intervals`.
 
 ```{r}
+# Summary of the results
 summary(result)
 ```
 
