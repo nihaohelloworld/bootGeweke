@@ -86,13 +86,13 @@ result <- bootstrap_geweke(mcmc_object, B = 1000, confidence_level = 0.95,
 
 The `plot()` method for `bootGeweke` objects allow you to visualize the distribution of Z-scores for different parameters:       
 
-```{r}
+```{r, fig.width=8, fig.height=6}
 # Plot the Z-scores for the first parameter (mu)
 plot(result, param = 1)
 ```
 
 
-```{r}
+```{r, fig.width=8, fig.height=6}
 # Plot the Z-scores for the second parameter (sigma)
 plot(result, param = 2)
 ```
