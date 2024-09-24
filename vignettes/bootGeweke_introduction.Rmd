@@ -24,7 +24,9 @@ library(bootGeweke)
 
 This vignette demonstrates how to use the `bootstrap_geweke()` function from the **bootGeweke** package to perform a Geweke diagnostic with bootstrap sampling.
 
-The Geweke diagnostic is a convergence diagnostic for Markov Chain Monte Carlo (MCMC) chains. This package introduces a bootstrap approach to calculate Geweke Z-scores and confidence intervals.
+The Geweke diagnostic is a convergence diagnostic for Markov Chain Monte Carlo (MCMC) chains that introduced by John Geweke in 1992. It compares the means of the early and late portions of a single MCMC chain to detect any significant differences. If the chain has converged, the samples from the early and late segments should have similar means, implying that the chain is stationary and has reached equilibrium. The Geweke method calculates a Z-score to test the hypothesis that the means of these two segments are equal.
+
+This package introduces a bootstrap approach to calculate Geweke Z-scores and confidence intervals of bootstrapping samples of the MCMC chain, to assess the convergence of the chain.        
 
 ## Installing the Package
 
@@ -43,9 +45,7 @@ library(bootGeweke)
 browseVignettes(package = "bootGeweke")
 ```
 
-## Example of Using `bootstrap_geweke()` Function
-
-## Example of Multiple Chains and Parameters
+## Example of Using `bootstrap_geweke()` Function - Multiple Chains and Parameters
 
 ```{r example_geweke_diagnostic, echo = TRUE}
 library(bootGeweke)
@@ -119,6 +119,17 @@ tryCatch({
   print(e)
 })
 ```
+
+## Assessing MCMC convergence by other tools and comaring resul
+
+```{r}
+# Combined all 3 chains from the previous example into one chain
+mcmc_chains <- mcmc.list(mcmc_chain1, mcmc_chain2, mcmc_chain3)
+# Use geweke.diag function to compute Z-score
+coda::geweke.diag(mcmc_chains)
+```
+
+Use the `geweke.diag` function to compute the Z-score of the chain and compare it with the results from `bootstrap_geweke`. Note that the results from these two methods are not expected to be identical. The `geweke.diag` function computes the Z-score directly from the input MCMC chain, while `bootstrap_geweke` computes the mean of Z-scores derived from bootstrap samples of the input MCMC chain. The comparison is intended for assessing the convergence of the chain rather than for numerical equivalence.       
 
 ## Conclusion       
 
