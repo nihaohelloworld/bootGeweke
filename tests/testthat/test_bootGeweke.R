@@ -4,7 +4,7 @@ library(coda)
 # Test for valid inputs
 test_that("bootstrap_geweke works for valid inputs", {
   x <- coda::as.mcmc.list(coda::mcmc(rnorm(1000)))
-  result <- bootstrap_geweke(x, B = 500, n = 500, confidence_level = 0.95, frac1 = 0.1, frac2 = 0.5)
+  result <- bootstrap_geweke(x, B = 500, n = 1000, confidence_level = 0.95, frac1 = 0.1, frac2 = 0.5)
   expect_s3_class(result, "bootGeweke")
   expect_true(is.numeric(result$var1$z_scores))
   expect_true(length(result$var1$z_scores) == 500)

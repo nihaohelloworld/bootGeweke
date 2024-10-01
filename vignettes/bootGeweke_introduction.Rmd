@@ -1,6 +1,7 @@
 ---
-title: "Bootstrap Geweke Diagnostic: An Introduction"
-author: "Jay"
+title: "Bootstrap Geweke Diagnostic"
+subtitle: "An Introduction"
+author: "Jay Liu"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
