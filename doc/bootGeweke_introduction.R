@@ -49,11 +49,11 @@ mcmc_object <- mcmc.list(mcmc_chain1, mcmc_chain2, mcmc_chain3)
 result <- bootstrap_geweke(mcmc_object, B = 1000, confidence_level = 0.95, 
                            frac1 = 0.1, frac2 = 0.5)
 
-## ----fig.width=8, fig.height=6------------------------------------------------
+## ----fig.width=6, fig.height=4------------------------------------------------
 # Plot the Z-scores for the first parameter (mu)
 plot(result, param = 1)
 
-## ----fig.width=8, fig.height=6------------------------------------------------
+## ----fig.width=6, fig.height=4------------------------------------------------
 # Plot the Z-scores for the second parameter (sigma)
 plot(result, param = 2)
 
