@@ -141,6 +141,44 @@ The `bootstrap_geweke()` function provides an effective way to perform a bootstr
 
 # Appendix
 
+## Computation Flow
+
+1. Input validation and preparation in R (`bootstrap_geweke`):        
+  * The `bootstrap_geweke` function validates the input parameters:
+  * Combines the MCMC object into single matrix (`combined_chain`) if there are multiple chains with in MCMC object. If there are multiple parameters, each column represents a parameter.
+  * Sets the default values for the number of bootstrap samples (`B=1000`) and the sample size (`n`).        
+  
+2. Loop through each parameter in R:          
+  * For each parameter in MCMC object:        
+    * Extracts the corresponding column from the combined chains matrix to process one parameter at a time.        
+    
+3. Call C++ function (`bootstrapGewekeCpp`):        
+  * Passes the current parameter's chain to the C++ function along with other required arguments (`B`, `n`, `frac1`, `frac2`, `confidence_level`).
+  * The C++ function performs the following steps:        
+    1. Bootstrap sampling:        
+      * Generates `B` bootstrap smaples from the MCMC object with replacement, each of size `n`.
+    2. Geweke Z-score calculation:
+      * For each bootstrap sample, the helper function (`geweke_z`) computes the Z-score: 
+        * Divides the chain into initial (`frac1`) and final (`frac2`) segments.
+        * Computes the means and variances of these segments.
+        * Calculates the Geweke Z-score as the standardized difference between the means of the segments.
+    3. Compute summary statistics:        
+      * Mean: Computes the mean of the bootstrap Z-scores using the `comput_mean` function.
+      * Standard deviation: Computes the standard deviation of the bootstrap Z-scores using `compute_se` function.
+      * Confidence intervals: Sorts the Z-scores and extracts values corresponding to the lower and upper bounds based on the specified confidence level using `compute_confidence_intervals` function.        
+    4. Return results to R:
+      * Returns a list containing the vector of Z-scores, their mean, standard deviation, and confidence intervals.        
+
+4. Store results in R:
+  * In the `bootstrap_geweke` function, stores the results (Z-scores, mean, standard deviation, and confidence intervals) for each parameter in a list.       
+5. Class assignment and return in R: 
+  * Assigns the class `bootGeweke` to the results object for compatibility with custom summary and plot methods.       
+  * Return the results to the user.       
+  
+6. Post-processing in R:        
+  * summary and plot methods:
+  The custom summary and plot methods (`summary.bootGeweke` and `plot.bootGeweke`) are then used to present the results. The summary method displays the mean, standard deviation, and confidence intervals for each parameter, while the plot method visualizes the distribution of the Z-scores.
+      
 
 
 
