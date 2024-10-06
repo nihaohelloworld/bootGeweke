@@ -114,19 +114,14 @@ bootstrap_geweke <- function(x, B = NULL, n = NULL, confidence_level = 0.95, fra
     param_chain <- combined_chains[, param]
 
     # Perform the bootstrap sampling and get Z-scores using C++
-    z_scores <- bootstrapGewekeCpp(param_chain, B, n, frac1, frac2)
-
-    # Calculate summary statistics for Z-scores
-    z_mean <- mean(z_scores)
-    z_sd <- sd(z_scores)
-    confidence_intervals <- quantile(z_scores, probs = c((1 - confidence_level) / 2, 1 - (1 - confidence_level) / 2))
+    result <- bootstrapGewekeCpp(param_chain, B, n, frac1, frac2, confidence_level)
 
     # Store the summary results for this parameter
     results[[param]] <- list(
-      z_scores = z_scores,
-      z_mean = z_mean,
-      z_sd = z_sd,
-      confidence_intervals = confidence_intervals
+      z_scores = result$z_scores,
+      z_mean = result$z_mean,
+      z_sd = result$z_sd,
+      confidence_intervals = result$confidence_intervals
     )
   }
 

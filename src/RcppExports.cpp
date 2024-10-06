@@ -11,8 +11,8 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // bootstrapGewekeCpp
-NumericVector bootstrapGewekeCpp(NumericVector chain, int B, int n, double frac1, double frac2);
-RcppExport SEXP _bootGeweke_bootstrapGewekeCpp(SEXP chainSEXP, SEXP BSEXP, SEXP nSEXP, SEXP frac1SEXP, SEXP frac2SEXP) {
+List bootstrapGewekeCpp(NumericVector chain, int B, int n, double frac1, double frac2, double confidence_level);
+RcppExport SEXP _bootGeweke_bootstrapGewekeCpp(SEXP chainSEXP, SEXP BSEXP, SEXP nSEXP, SEXP frac1SEXP, SEXP frac2SEXP, SEXP confidence_levelSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -21,13 +21,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< double >::type frac1(frac1SEXP);
     Rcpp::traits::input_parameter< double >::type frac2(frac2SEXP);
-    rcpp_result_gen = Rcpp::wrap(bootstrapGewekeCpp(chain, B, n, frac1, frac2));
+    Rcpp::traits::input_parameter< double >::type confidence_level(confidence_levelSEXP);
+    rcpp_result_gen = Rcpp::wrap(bootstrapGewekeCpp(chain, B, n, frac1, frac2, confidence_level));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_bootGeweke_bootstrapGewekeCpp", (DL_FUNC) &_bootGeweke_bootstrapGewekeCpp, 5},
+    {"_bootGeweke_bootstrapGewekeCpp", (DL_FUNC) &_bootGeweke_bootstrapGewekeCpp, 6},
     {NULL, NULL, 0}
 };
 

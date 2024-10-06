@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
 library(bootGeweke)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  install.packages("bootGeweke_1.0.3.tar.gz", repos = NULL, type = "source")
+#  install.packages("bootGeweke_1.0.5.tar.gz", repos = NULL, type = "source")
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  library(bootGeweke)
@@ -74,4 +74,44 @@ tryCatch({
 mcmc_chains <- mcmc.list(mcmc_chain1, mcmc_chain2, mcmc_chain3)
 # Use geweke.diag function to compute Z-score
 coda::geweke.diag(mcmc_chains)
+
+## ----eval=FALSE, fig.width=6, fig.height=4------------------------------------
+#  library(rjags)
+#  library(coda)
+#  
+#  # Load built-in data
+#  data("InsectSprays")
+#  
+#  # Create JAGS model
+#  model_string <- "
+#  model {
+#    for (i in 1:N) {
+#      count[i] ~ dpois(lambda[spray[i]])
+#    }
+#  
+#    for (j in 1:t) {
+#      lambda[j] ~ dgamma(0.1, 0.1)
+#    }
+#  }"
+#  
+#  # Prepare the data for JAGS
+#  data_list <- list(
+#    count = InsectSprays$count,
+#    spray = as.numeric(InsectSprays$spray),
+#    N = nrow(InsectSprays),
+#    t = length(unique(InsectSprays$spray))
+#  )
+#  
+#  # Compile the model and run MCMC
+#  jags_model <- jags.model(textConnection(model_string),
+#                           data = data_list, n.chains = 3)
+#  # Burn-in
+#  update(jags_model, 1000)
+#  samples <- coda.samples(jags_model, variable.names = c("lambda"), n.iter = 1000)
+#  
+#  # Assess convergence using bootGeweke package
+#  library(bootGeweke)
+#  boot_result <- bootstrap_geweke(samples)
+#  summary(boot_result)
+#  plot(boot_result)
 
