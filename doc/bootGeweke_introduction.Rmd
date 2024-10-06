@@ -32,11 +32,11 @@ This package introduces a bootstrap approach to calculate Geweke Z-scores and co
 
 You can install the development version of the package using the provided file:       
 
-1. Locate the `bootGeweke_1.0.3.tar.gz` file, ensure that the package source `.tar.gz` file is in your working directory or specify the full path to the file.       
+1. Locate the `bootGeweke_1.0.5.tar.gz` file, ensure that the package source `.tar.gz` file is in your working directory or specify the full path to the file.       
 2. Install the package using `install.packages()` as follow:    
 
 ```{r, eval=FALSE}
-install.packages("bootGeweke_1.0.3.tar.gz", repos = NULL, type = "source")
+install.packages("bootGeweke_1.0.5.tar.gz", repos = NULL, type = "source")
 ```
 
 ```{r, eval=FALSE}
@@ -45,7 +45,7 @@ library(bootGeweke)
 browseVignettes(package = "bootGeweke")
 ```
 
-## Example of Using `bootstrap_geweke()` Function - Multiple Chains and Parameters
+## Example 1: Simulated multiple Chains and Parameters
 
 ```{r example_geweke_diagnostic, echo = TRUE}
 library(bootGeweke)
@@ -82,7 +82,7 @@ result <- bootstrap_geweke(mcmc_object, B = 1000, confidence_level = 0.95,
                            frac1 = 0.1, frac2 = 0.5)
 ```
 
-## Plotting the Z-scores
+### Plotting the Z-scores
 
 The `plot()` method for `bootGeweke` objects allow you to visualize the distribution of Z-scores for different parameters:       
 
@@ -98,7 +98,7 @@ plot(result, param = 2)
 ```
 
 
-## Summary the Z-scores statistic       
+### Summary the Z-scores statistic       
 
 The `summary()` method for `bootGeweke` objects allow you to summaries the statistics of Z-scores distribution: `Mean Z-score`, `Standard Deviation`, `Confidence Intervals`.
 
@@ -107,7 +107,7 @@ The `summary()` method for `bootGeweke` objects allow you to summaries the stati
 summary(result)
 ```
 
-## Handling Input Erros
+### Handling Input Erros
 
 The function includes several input checks to ensure valid inputs. For example:
 
@@ -120,7 +120,7 @@ tryCatch({
 })
 ```
 
-## Assessing MCMC convergence by other tools and comparing results
+### Assessing MCMC convergence by other tools and comparing results
 
 ```{r}
 # Combined all 3 chains from the previous example into one chain
@@ -130,6 +130,52 @@ coda::geweke.diag(mcmc_chains)
 ```
 
 Use the `geweke.diag` function to compute the Z-score of the chain and compare it with the results from `bootstrap_geweke`. Note that the results from these two methods are not expected to be identical. The `geweke.diag` function computes the Z-score directly from the input MCMC chain, while `bootstrap_geweke` computes the mean of Z-scores derived from bootstrap samples of the input MCMC chain. The comparison is intended for assessing the convergence of the chain rather than for numerical equivalence.       
+
+## Example 2: Using `rjags` package to model the effectiveness of different insect sprays (R built-in dataset "InsectSprays")       
+
+To be able to use `rjags` package, it will need to install `JAGS` software (https://sourceforge.net/projects/mcmc-jags/) on the computer first, and then install `rjags` package in R (see `JAGS` and `rjags` user manuals for details). The source code is provided as follow, it can be ran if `rjags` is installed.
+
+```{r, eval=FALSE, fig.width=6, fig.height=4}
+library(rjags)
+library(coda)
+
+# Load built-in data
+data("InsectSprays")
+
+# Create JAGS model
+model_string <- "
+model {
+  for (i in 1:N) {
+    count[i] ~ dpois(lambda[spray[i]])
+  }
+  
+  for (j in 1:t) {
+    lambda[j] ~ dgamma(0.1, 0.1)
+  }
+}"
+
+# Prepare the data for JAGS
+data_list <- list(
+  count = InsectSprays$count,
+  spray = as.numeric(InsectSprays$spray),
+  N = nrow(InsectSprays), 
+  t = length(unique(InsectSprays$spray))
+)
+
+# Compile the model and run MCMC
+jags_model <- jags.model(textConnection(model_string), 
+                         data = data_list, n.chains = 3)
+# Burn-in
+update(jags_model, 1000)  
+samples <- coda.samples(jags_model, variable.names = c("lambda"), n.iter = 1000)
+
+# Assess convergence using bootGeweke package
+library(bootGeweke)
+boot_result <- bootstrap_geweke(samples)
+summary(boot_result)
+plot(boot_result)
+```
+
 
 ## Conclusion       
 
