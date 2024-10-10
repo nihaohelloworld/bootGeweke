@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
 library(bootGeweke)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  install.packages("bootGeweke_1.0.3.tar.gz", repos = NULL, type = "source")
+#  install.packages("bootGeweke_1.0.5.tar.gz", repos = NULL, type = "source")
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  library(bootGeweke)

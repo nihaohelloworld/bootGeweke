@@ -32,11 +32,11 @@ This package introduces a bootstrap approach to calculate Geweke Z-scores and co
 
 You can install the development version of the package using the provided file:       
 
-1. Locate the `bootGeweke_1.0.3.tar.gz` file, ensure that the package source `.tar.gz` file is in your working directory or specify the full path to the file.       
+1. Locate the `bootGeweke_1.0.5.tar.gz` file, ensure that the package source `.tar.gz` file is in your working directory or specify the full path to the file.       
 2. Install the package using `install.packages()` as follow:    
 
 ```{r, eval=FALSE}
-install.packages("bootGeweke_1.0.3.tar.gz", repos = NULL, type = "source")
+install.packages("bootGeweke_1.0.5.tar.gz", repos = NULL, type = "source")
 ```
 
 ```{r, eval=FALSE}

@@ -31,7 +31,7 @@ It computes Z-scores for the Geweke diagnostic, allowing for confidence interval
 based on the bootstrap samples.
 }
 \examples{
-\dontrun{
+\donttest{
 library(coda)
 mcmc_chain <- coda::as.mcmc.list(coda::mcmc(rnorm(1000)))  # Example MCMC chain
 result <- bootstrap_geweke(mcmc_chain, B = 1000, n = 1000, confidence_level = 0.95)
